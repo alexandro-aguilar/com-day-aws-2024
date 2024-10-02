@@ -34,7 +34,7 @@ export default class SaveScoreLambda {
       statements: [
         new PolicyStatement({
           actions: ['dynamodb:UpdateItem'],
-          resources: ['arn:aws:dynamodb:us-east-1:058632605534:table/ComDayUsers'],
+          resources: ['arn:aws:dynamodb:us-east-1:131578276461:table/ComDayUsers'],
         }),
       ],
     });

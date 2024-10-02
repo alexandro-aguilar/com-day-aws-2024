@@ -36,7 +36,7 @@ export class GetQuizLambda {
       statements: [
         new PolicyStatement({
           actions: ['s3:GetObject'],
-          resources: ['arn:aws:s3:::com-day-questions/*'],
+          resources: ['arn:aws:s3:::com-day-questions-131578276461/*'],
         }),
       ],
     });

@@ -11,7 +11,7 @@ export default class GetQuizRepository {
 
   constructor() {
     this.client = new S3Client({ region: 'us-east-1' });
-    this.bucket = 'com-day-questions';
+    this.bucket = 'com-day-questions-131578276461';
     this.paraphraseRepository = new ParaphraseRepository();
   }
 

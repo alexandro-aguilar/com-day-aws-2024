@@ -17,7 +17,7 @@ export default class ParaphraseRepository {
     const contentType = 'application/json';
 
     const paraphrasedQuestions = questions.map(async question => {
-      const prompt = `Human: Paraphrase the following sentence for use in a quiz application, consider being short and concise without removing the meaning of the question.
+      const prompt = `Human: You are an aws expert, paraphrase the following sentence for use in a quiz application, consider you are asking the question, consider being short and concise without removing the meaning of the question, here is an example of the format How can a developer authenticate users logging into an application behind an ALB that is the origin for a CloudFront distribution?.
       <text>
       ${question.text}
       </text>
@@ -44,7 +44,6 @@ export default class ParaphraseRepository {
       return question;
     });
     const response = await Promise.all(paraphrasedQuestions);
-    console.log()
     return new Quiz(response);
   }
 }

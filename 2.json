@@ -25,7 +25,7 @@
     },
     {
         "id": 2,
-        "text": "Your company has an online game application deployed in an Auto Scaling group. The traffic of the application is predictable. Every Friday, the traffic starts to increase, remains high on weekends and then drops on Monday. You need to plan the scaling actions for the Auto Scaling group. Which method is the most suitable for the scaling policy?",
+        "text": "An application in an Auto Scaling group has predictable weekly traffic: it rises on Fridays, stays high over weekends, and drops on Mondays. What's the most suitable scaling policy for this pattern?",
         "answers": [
             {
                 "id": 1,

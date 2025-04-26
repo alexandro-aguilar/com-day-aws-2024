@@ -11,7 +11,7 @@ export default class UserRegisterController {
   async execute(request: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
     const body = JSON.parse(request.body as string);
     const user = new User(body.email, body.profile, body.name);
-    const registrationResponse: Boolean = await this.userRegisterRepository.execute(user);
+    const registrationResponse: boolean = await this.userRegisterRepository.execute(user);
 
     return {
       statusCode: registrationResponse ? HttpStatusCode.CREATED : HttpStatusCode.OK

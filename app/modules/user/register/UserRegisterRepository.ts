@@ -11,7 +11,7 @@ export default class UserRegisterRepository {
     this.client = DynamoDBDocumentClient.from(client);
   }
 
-  async execute(user: User): Promise<Boolean> {
+  async execute(user: User): Promise<boolean> {
     const params = {
       TableName: Environment.UsersTable,
       Item: user.toJSON(),
@@ -21,6 +21,7 @@ export default class UserRegisterRepository {
       const command = new PutCommand(params);
       await this.client.send(command);
       return true;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(error: any) {
       console.error('Error', error);
       if (error.name === 'ConditionalCheckFailedException') {

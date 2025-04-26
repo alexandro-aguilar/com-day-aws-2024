@@ -1,37 +1,46 @@
 {
-  "name": "cdk-lambda-template",
+  "name": "galactic-quiz",
   "version": "0.1.0",
   "bin": {
-    "cdk-lambda-template": "bin/cdk-lambda-template.js"
+    "galactic-quiz": "iac/GalacticQuiz.js"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "dev": "rm -rf ./cdk.out && cdk synth && sam local start-api -t ./cdk.out/ComDay2024.template.json"
+    "dev": "rm -rf ./cdk.out && cdk synth && sam local start-api -t ./cdk.out/GalacticQuiz.template.json"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.145",
-    "@types/dotenv": "^8.2.0",
-    "@types/jest": "^29.5.12",
-    "@types/node": "22.5.4",
-    "aws-cdk": "2.169.0",
-    "dotenv": "^16.4.5",
-    "esbuild": "^0.23.1",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@eslint/js": "^9.22.0",
+    "@types/aws-lambda": "^8.10.147",
+    "@types/dotenv": "^8.2.3",
+    "@types/jest": "^29.5.14",
+    "@types/node": "22.13.10",
+    "aws-cdk": "2.1004.0",
+    "aws-cdk-lib": "2.184.1",
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
-    "typescript": "~5.6.2"
+    "typescript": "~5.8.2",
+    "typescript-eslint": "^8.26.1"
   },
   "dependencies": {
     "@aws-cdk/aws-lambda-nodejs": "^1.204.0",
-    "@aws-sdk/client-bedrock-runtime": "^3.662.0",
-    "@aws-sdk/client-dynamodb": "^3.656.0",
-    "@aws-sdk/client-s3": "^3.654.0",
-    "@aws-sdk/lib-dynamodb": "^3.656.0",
-    "aws-cdk-lib": "2.168.0",
-    "constructs": "^10.0.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.758.0",
+    "@aws-sdk/client-dynamodb": "^3.767.0",
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@aws-sdk/lib-dynamodb": "^3.767.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "constructs": "^10.4.2",
     "source-map-support": "^0.5.21"
   }
 }

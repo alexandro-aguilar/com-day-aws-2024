@@ -1,33 +1,33 @@
 import Types from '../../../utils/types';
 
 export default class User {
-  private _email: string;
-  private _name: string;
-  private _profile: Types;
+  private email: string;
+  private name: string;
+  private profile: Types;
 
   constructor(email: string, profile: Types, name: string) {
-    this._email = email;
-    this._profile = profile;
-    this._name = name;
+    this.email = email;
+    this.profile = profile;
+    this.name = name;
   }
 
-  get email(): string {
-    return this._email;
+  get Email(): string {
+    return this.email;
   }
 
-  get profile(): Types {
-    return this._profile;
+  get Profile(): Types {
+    return this.profile;
   }
 
-  get name(): string {
-    return this._name;
+  get Name(): string {
+    return this.name;
   }
 
   toJSON(): object {
     return {
-      email: this._email,
-      profile: this._profile,
-      name: this._name
+      email: this.email,
+      profile: this.profile,
+      name: this.name
     }
   }
 }

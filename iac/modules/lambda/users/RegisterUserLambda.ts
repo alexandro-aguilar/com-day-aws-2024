@@ -1,4 +1,4 @@
-import path = require('path');
+import { join } from 'path';
 import { Construct } from 'constructs';
 import { Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
@@ -6,14 +6,16 @@ import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
 import { HttpMethod, HttpRoute, HttpRouteKey } from 'aws-cdk-lib/aws-apigatewayv2';
 import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
 import LambdaStackProps from '../../../utils/LambdaStackProps';
+import esbuildBundlingConfig from '../../../utils/esbuildBundlingConfig';
 
-export default class RegisterUserLambda {
-  private readonly name = 'RegisterUser';
+
+export default class RegisterUserLambda extends NodejsFunction {
+  private readonly name;
 
   constructor(scope: Construct, props: LambdaStackProps) {
-    const lambda = new NodejsFunction(scope, `${this.name}Lambda`, {
-      runtime: Runtime.NODEJS_20_X,
-      entry: path.join(__dirname, '../../../../app/modules/user/register/UserRegisterHandler.ts'),
+    super(scope, `RegisterUserLambda`, {
+      runtime: Runtime.NODEJS_22_X,
+      entry: join(__dirname, '../../../../app/modules/user/register/UserRegisterHandler.ts'),
       handler: 'handler', // Name of the exported handler function,
       memorySize: 1024,
       architecture: Architecture.ARM_64,
@@ -21,17 +23,9 @@ export default class RegisterUserLambda {
       environment: {
         USERS_TABLE: props.table.tableName
       },
-      bundling: {
-        externalModules: [
-          'aws-sdk',
-          '@aws-sdk'
-        ], // Exclude specific modules from bundling
-        nodeModules: [],     // Include specific modules in the bundle
-        target: 'node20',    // Set the target environment for esbuild
-        sourceMap: true,
-        sourcesContent: false,
-      },
+      bundling: esbuildBundlingConfig,
     });
+    this.name = 'RegisterUser';
 
     // Create an inline policy for DynamoDB PutItem access
     const dynamoPutItemPolicy = new Policy(scope, `${this.name}LambdaDynamoPutItemPolicy`, {
@@ -44,9 +38,9 @@ export default class RegisterUserLambda {
     });
 
     // Attach the DynamoDB access policy to the Lambda function's role
-    lambda.role?.attachInlinePolicy(dynamoPutItemPolicy);
+    this.role?.attachInlinePolicy(dynamoPutItemPolicy);
 
-    const integration = new HttpLambdaIntegration(`${this.name}Integration`, lambda);
+    const integration = new HttpLambdaIntegration(`${this.name}Integration`, this);
 
     new HttpRoute(scope, `${this.name}Route`, {
       httpApi: props.api,

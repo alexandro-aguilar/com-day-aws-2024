@@ -16,11 +16,11 @@ export default class SaveScoreRepository {
       const command = new UpdateCommand({
         TableName: Environment.UsersTable,
         Key: {
-          email: score.email
+          email: score.Email
         },
         UpdateExpression: 'set score = :score',
         ExpressionAttributeValues: {
-          ':score': score.score
+          ':score': score.Score
         },
         ConditionExpression: 'attribute_not_exists(score)',
         ReturnValues: 'NONE'
@@ -28,6 +28,7 @@ export default class SaveScoreRepository {
   
       await this.client.send(command);
       return true;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch(error: any) {
       if (error.name === 'ConditionalCheckFailedException') {
         return false;

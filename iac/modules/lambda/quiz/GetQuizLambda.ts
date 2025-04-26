@@ -1,4 +1,4 @@
-import * as path from 'path';
+import { join } from 'path';
 import { Architecture, Runtime, Tracing } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
@@ -7,14 +7,15 @@ import { HttpMethod, HttpRoute, HttpRouteKey } from 'aws-cdk-lib/aws-apigatewayv
 import { Construct } from 'constructs';
 import { Duration } from 'aws-cdk-lib';
 import LambdaStackProps from '../../../utils/LambdaStackProps';
+import esbuildBundlingConfig from '../../../utils/esbuildBundlingConfig';
 
-export class GetQuizLambda {
-  private readonly name = 'GetQuiz';
+export class GetQuizLambda extends NodejsFunction {
+  private readonly name;
 
   constructor(scope: Construct, props: LambdaStackProps) {
-    const lambda = new NodejsFunction(scope, `${this.name}Lambda`, {
-      runtime: Runtime.NODEJS_20_X,
-      entry: path.join(__dirname, '../../../../app/modules/quiz/get/GetQuizHandler.ts'),
+    super(scope, `GetQuizLambda`, {
+      runtime: Runtime.NODEJS_22_X,
+      entry: join(__dirname, '../../../../app/modules/quiz/get/GetQuizHandler.ts'),
       handler: 'handler', // Name of the exported handler function,
       memorySize: 1024,
       timeout: Duration.seconds(60),
@@ -24,17 +25,9 @@ export class GetQuizLambda {
       environment: {
         QUIZ_BUCKET: props.bucket.bucketName
       },
-      bundling: {
-        externalModules: [
-          'aws-sdk',
-          '@aws-sdk'
-        ], // Exclude specific modules from bundling
-        nodeModules: [],     // Include specific modules in the bundle
-        target: 'node20',    // Set the target environment for esbuild
-        sourceMap: true,
-        sourcesContent: false,
-      },
+      bundling: esbuildBundlingConfig,
     });
+    this.name = 'GetQuiz';
 
     //S3 access policy
     const s3AccessPolicy = new Policy(scope, `${this.name}LambdaS3AccessPolicy`, {
@@ -46,7 +39,7 @@ export class GetQuizLambda {
       ],
     });
 
-    lambda.role?.attachInlinePolicy(s3AccessPolicy);
+    this.role?.attachInlinePolicy(s3AccessPolicy);
 
      // Create an inline policy for Bedrock model invocation
     const bedrockInvokePolicy = new Policy(scope, `${this.name}LambdaBedrockInvokePolicy`, {
@@ -61,9 +54,9 @@ export class GetQuizLambda {
     });
 
     // Attach the Bedrock access policy to the Lambda function's role
-    lambda.role?.attachInlinePolicy(bedrockInvokePolicy);
+    this.role?.attachInlinePolicy(bedrockInvokePolicy);
 
-    const integration = new HttpLambdaIntegration(`${this.name}Integration`, lambda);
+    const integration = new HttpLambdaIntegration(`${this.name}Integration`, this);
 
     new HttpRoute(scope, `${this.name}Route`, {
       httpApi: props.api,

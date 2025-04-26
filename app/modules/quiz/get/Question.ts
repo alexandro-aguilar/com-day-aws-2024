@@ -1,51 +1,51 @@
 import Answer from './Answer';
 
 export default class Question {
-  private _id: number;
-  private _type: number;
-  private _text: string;
-  private _answers: Array<Answer>;
-  private _rightAnswer: number;
+  private id: number;
+  private type: number;
+  private text: string;
+  private answers: Array<Answer>;
+  private rightAnswer: number;
 
   constructor(id: number, type: number, text: string, answers: Array<Answer>, rightAnswer: number) {
-    this._id = id;
-    this._text = text;
-    this._type = type;
-    this._answers = answers;
-    this._rightAnswer = rightAnswer;
+    this.id = id;
+    this.text = text;
+    this.type = type;
+    this.answers = answers;
+    this.rightAnswer = rightAnswer;
   }
 
-  get id(): number {
-    return this._id;
+  get Id(): number {
+    return this.id;
   }
   
-  get type(): number {
-    return this._type;
+  get Type(): number {
+    return this.type;
   }
   
-  get text(): string {
-    return this._text;
+  get Text(): string {
+    return this.text;
   }
 
-  set text(text: string) {
-    this._text = text;
+  set Text(text: string) {
+    this.text = text;
   }
 
-  get answers(): Array<Answer> {
-    return this._answers;
+  get Answers(): Array<Answer> {
+    return this.answers;
   }
 
-  get rightAnswer(): number {
-    return this._rightAnswer;
+  get RightAnswer(): number {
+    return this.rightAnswer;
   }
 
   toJson() {
     return {
-      id: this._id,
-      type: this._type,
-      text: this._text,
-      answers: this._answers.map(answer => answer.toJson()),
-      rightAnswer: this._rightAnswer
+      id: this.id,
+      type: this.type,
+      text: this.text,
+      answers: this.answers.map(answer => answer.toJson()),
+      rightAnswer: this.rightAnswer
     }
   }
 }

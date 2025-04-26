@@ -33,6 +33,14 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
+    - name: Get AWS Account ID
+      run: |
+        ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+        echo "AWS_ACCOUNT_ID=$ACCOUNT_ID" >> $GITHUB_ENV
+
+    - name: Use AWS Account ID
+      run: echo "AWS Account ID is $AWS_ACCOUNT_ID"
+
     - name: Install AWS CDK
       run: npm i -g aws-cdk
 

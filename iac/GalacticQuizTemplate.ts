@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { MyLambdaStack } from '../lib/cdk-lambda-template-stack';
+import GalacticQuizStack from './GalacticQuizStack';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-
+// Todo: borrar stack con el viejo nombre en todas las cuentas AWS
 const app = new cdk.App();
-new MyLambdaStack(app, 'ComDay2024', {
+new GalacticQuizStack(app, 'GalacticQuiz', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

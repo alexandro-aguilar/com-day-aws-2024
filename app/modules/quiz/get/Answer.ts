@@ -1,24 +1,24 @@
 export default class Answer {
-  private _id: number;
-  private _text: string;
+  private id: number;
+  private text: string;
 
   constructor(id: number, text: string) {
-    this._id = id;
-    this._text = text;
+    this.id = id;
+    this.text = text;
   }
 
-  get id(): number {
-    return this._id;
+  get Id(): number {
+    return this.id;
   }
 
-  get text(): string {
-    return this._text;
+  get Text(): string {
+    return this.text;
   }
 
   toJson() {
     return {
-      id: this._id,
-      text: this._text
+      id: this.id,
+      text: this.text
     }
   }
 }

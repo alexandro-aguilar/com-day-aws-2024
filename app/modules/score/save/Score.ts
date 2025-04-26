@@ -1,24 +1,24 @@
 export default class Score {
-  private _email: string;
-  private _score: number;
+  private email: string;
+  private score: number;
 
   constructor(email: string, score: number) {
-    this._email = email;
-    this._score = score;
+    this.email = email;
+    this.score = score;
   }
 
-  get email(): string {
-    return this._email;
+  get Email(): string {
+    return this.email;
   }
 
-  get score(): number {
-    return this._score;
+  get Score(): number {
+    return this.score;
   }
 
   toJson() {
     return {
-      email: this._email,
-      score: this._score
+      email: this.email,
+      score: this.score
     }
   }
 }
